@@ -1,22 +1,44 @@
 import 'package:flutter/material.dart';
-import '../components/room_item.dart';
+import 'package:testapp/rooms/presentation/components/room_list.dart';
 
-class RoomsScreen extends StatefulWidget {
-  const RoomsScreen({Key? key}) : super(key: key);
+class RoomsMainScreen extends StatefulWidget {
+  const RoomsMainScreen({Key? key}) : super(key: key);
 
   @override
-  _RoomsScreenState createState() => _RoomsScreenState();
+  State<RoomsMainScreen> createState() => _RoomsMainScreenState();
 }
 
-class _RoomsScreenState extends State<RoomsScreen> {
-  final PageController _pageController = PageController(initialPage: 0);
+class _RoomsMainScreenState extends State<RoomsMainScreen> {
+  int _selectedIndex = 0;
+  final PageController _pageController = PageController();
 
-  // Lista de URLs o identificadores de videos. Puedes modificarla o integrarla con tu backend.
-  final List<String> videoUrls = [
-    'https://example.com/video1.mp4',
-    'https://example.com/video2.mp4',
-    'https://example.com/video3.mp4',
+  final List<Widget> _screens = [
+    const Center(child: Text('Buscar')),
+    const RoomsList(),
+    const Center(child: Text('Subir Video')),
+    const Center(child: Text('Inbox')),
+    const Center(child: Text('Perfil')),
   ];
+
+  void _onTabTapped(int index) {
+    setState(() => _selectedIndex = index);
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _onPageChanged(int index) {
+    setState(() => _selectedIndex = index);
+  }
+
+  BottomNavigationBarItem _buildTab(IconData icon, String label) {
+    return BottomNavigationBarItem(
+      icon: Icon(icon),
+      label: label,
+    );
+  }
 
   @override
   void dispose() {
@@ -27,14 +49,29 @@ class _RoomsScreenState extends State<RoomsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Generalmente en este tipo de pantalla se omite el AppBar para un look full screen.
-      body: PageView.builder(
+      body: PageView(
         controller: _pageController,
-        scrollDirection: Axis.vertical,
-        itemCount: videoUrls.length,
-        itemBuilder: (context, index) {
-          return RoomItem(videoUrl: videoUrls[index]);
-        },
+        onPageChanged: _onPageChanged,
+        children: _screens,
+        physics:
+            const BouncingScrollPhysics(), // se siente más natural como TikTok
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onTabTapped,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey,
+        backgroundColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: [
+          _buildTab(Icons.search, 'Buscar'),
+          _buildTab(Icons.home, 'Inicio'),
+          _buildTab(Icons.add_box, 'Subir'),
+          _buildTab(Icons.message, 'Inbox'),
+          _buildTab(Icons.person, 'Perfil'),
+        ],
       ),
     );
   }

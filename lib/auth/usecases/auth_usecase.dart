@@ -11,7 +11,7 @@ class AuthUseCaseImp implements AuthUseCase {
   Future<Response<LoginResponse>> login(LoginBody loginEntity) async {
     await Future.delayed(
         Duration(seconds: 2)); // Agrega un tiempo de espera de 2 segundos
-    print('Login UseCase: ${loginEntity.email} ${loginEntity.password}');
+    // print('Login UseCase: ${loginEntity.email} ${loginEntity.password}');
     var response = await _authRepository.login(loginEntity);
     if (response != null) {
       return Response<LoginResponse>(data: response, error: null);

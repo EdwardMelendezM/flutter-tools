@@ -6,7 +6,7 @@ class RoomRoutes {
 
   static Map<String, WidgetBuilder> get routes {
     return {
-      rooms: (context) => const RoomsScreen(),
+      rooms: (context) => const RoomsMainScreen(),
     };
   }
 }

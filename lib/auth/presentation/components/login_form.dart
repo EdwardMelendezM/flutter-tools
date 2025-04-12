@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:testapp/rooms/presentation/routes/room_routes.dart';
+import 'package:testapp/shared/utlis/safe_context.dart';
 import '../viewmodels/login_viewmodel.dart';
 import '../routes/app_routes.dart';
 
@@ -38,17 +39,20 @@ class _LoginFormState extends State<LoginForm> {
     return null;
   }
 
-  void _submit(BuildContext context) {
+  Future<void> _submit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      final loginVM = Provider.of<LoginViewModel>(context, listen: false);
-      // loginVM.login(
+      Navigator.pushReplacementNamed(context, RoomRoutes.rooms);
+      // final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+      // var response = await loginVM.login(
       //   context,
       //   _emailController.text.trim(),
       //   _passwordController.text.trim(),
       // );
-      //Redirect
-      // to the main screen after login
-      Navigator.pushReplacementNamed(context, RoomRoutes.rooms);
+      // await safeAsyncCallback(() async {
+      //   if (response.isSuccess) {
+      //     Navigator.pushReplacementNamed(context, RoomRoutes.rooms);
+      //   }
+      // });
     }
   }
 

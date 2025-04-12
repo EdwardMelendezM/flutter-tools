@@ -10,7 +10,7 @@ class LoginViewModel extends ChangeNotifier {
 
   LoginViewModel({required this.authUseCase});
 
-  Future<void> login(
+  Future<Response<LoginResponse>> login(
       BuildContext context, String email, String password) async {
     // Reinicia el estado
     isLoading = true;
@@ -22,17 +22,16 @@ class LoginViewModel extends ChangeNotifier {
 
     // Llama al usecase
     final response = await authUseCase.login(loginBody);
-
+    isLoading = false;
+    notifyListeners();
     if (response.isSuccess) {
       // Si el login fue exitoso, puedes navegar a otra pantalla o guardar el token.
       // Por ejemplo, podrías emitir un evento o actualizar el estado de la app.
-      Navigator.pushReplacementNamed(context, '/rooms');
+      return response;
     } else {
       // Captura y muestra el error
       errorMessage = response.error;
+      return response;
     }
-
-    isLoading = false;
-    notifyListeners();
   }
 }
