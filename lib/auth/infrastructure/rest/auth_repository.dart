@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:testapp/auth/domain/auth_entity.dart';
 import 'package:testapp/auth/domain/auth_repository.dart';
-import 'package:testapp/shared/api/api_client.dart';
+import '../../../../shared/api/api_client.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

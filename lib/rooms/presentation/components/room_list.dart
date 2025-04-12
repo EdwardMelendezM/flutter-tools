@@ -14,21 +14,24 @@ class _RoomsListState extends State<RoomsList> {
   // Modelo simple para representar cada video
   final List<Map<String, String>> videos = [
     {
-      'url': 'https://example.com/video1.mp4',
+      'url':
+          'https://cdn.coverr.co/videos/coverr-friends-getting-inside-a-car-6839/720p.mp4',
       'username': 'gymbro_dev',
       'avatar': 'https://i.pravatar.cc/150?img=1',
       'sound': 'Original sound - GymBro Beat',
       'description': '¡Entrena duro, vive fuerte! 💪🔥'
     },
     {
-      'url': 'https://example.com/video2.mp4',
+      'url':
+          'https://cdn.coverr.co/videos/coverr-a-transparent-cup-with-a-hot-beverage-5270/1080p.mp4',
       'username': 'fit_maria',
       'avatar': 'https://i.pravatar.cc/150?img=2',
       'sound': 'Remix by DJ Flex',
       'description': 'Rutina rápida para abdomen en casa 🏡✨'
     },
     {
-      'url': 'https://example.com/video3.mp4',
+      'url':
+          'https://cdn.coverr.co/videos/coverr-a-young-man-records-video-in-a-subway-station-8673/720p.mp4',
       'username': 'trainer_diego',
       'avatar': 'https://i.pravatar.cc/150?img=3',
       'sound': 'Original sound - DiegoMix',
