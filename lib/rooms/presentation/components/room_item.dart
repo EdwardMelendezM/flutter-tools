@@ -74,7 +74,6 @@ class _RoomItemState extends State<RoomItem> {
 
   void _seekVideo(BuildContext context, TapDownDetails details,
       BoxConstraints constraints) {
-    final RenderBox box = context.findRenderObject() as RenderBox;
     final tapX = details.localPosition.dx;
     final barWidth = constraints.maxWidth;
     final relative = tapX / barWidth;
@@ -194,7 +193,8 @@ class _RoomItemState extends State<RoomItem> {
                                   widthFactor: _calculateProgress(),
                                   child: Container(
                                     height: 4,
-                                    color: Colors.redAccent,
+                                    color: const Color.fromARGB(
+                                        255, 173, 173, 173),
                                   ),
                                 );
                               },
