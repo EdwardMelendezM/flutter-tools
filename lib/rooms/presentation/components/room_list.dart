@@ -12,14 +12,15 @@ class _RoomsListState extends State<RoomsList> {
   final PageController _pageController = PageController(initialPage: 0);
 
   // Modelo simple para representar cada video
-  final List<Map<String, String>> videos = [
+  final List<Map<String, dynamic>> videos = [
     {
       'url':
           'https://cdn.coverr.co/videos/coverr-friends-getting-inside-a-car-6839/720p.mp4',
       'username': 'gymbro_dev',
       'avatar': 'https://i.pravatar.cc/150?img=1',
       'sound': 'Original sound - GymBro Beat',
-      'description': '¡Entrena duro, vive fuerte! 💪🔥'
+      'description': '¡Entrena duro, vive fuerte! 💪🔥',
+      'isAsset': false,
     },
     {
       'url':
@@ -27,7 +28,8 @@ class _RoomsListState extends State<RoomsList> {
       'username': 'fit_maria',
       'avatar': 'https://i.pravatar.cc/150?img=2',
       'sound': 'Remix by DJ Flex',
-      'description': 'Rutina rápida para abdomen en casa 🏡✨'
+      'description': 'Rutina rápida para abdomen en casa 🏡✨',
+      'isAsset': false,
     },
     {
       'url':
@@ -35,7 +37,32 @@ class _RoomsListState extends State<RoomsList> {
       'username': 'trainer_diego',
       'avatar': 'https://i.pravatar.cc/150?img=3',
       'sound': 'Original sound - DiegoMix',
-      'description': 'Consejos de movilidad para principiantes 🤸‍♂️📌'
+      'description': 'Consejos de movilidad para principiantes 🤸‍♂️📌',
+      'isAsset': false,
+    },
+    {
+      'url': 'src/videos/video_1.mp4',
+      'username': 'gymbro_dev',
+      'avatar': 'https://i.pravatar.cc/150?img=1',
+      'sound': 'Original sound - GymBro Beat',
+      'description': '¡Entrena duro, vive fuerte! 💪🔥',
+      'isAsset': true,
+    },
+    {
+      'url': 'src/videos/video_2.mp4',
+      'username': 'fit_maria',
+      'avatar': 'https://i.pravatar.cc/150?img=2',
+      'sound': 'Remix by DJ Flex',
+      'description': 'Rutina rápida para abdomen en casa 🏡✨',
+      'isAsset': true,
+    },
+    {
+      'url': 'src/videos/video_3.mp4',
+      'username': 'trainer_diego',
+      'avatar': 'https://i.pravatar.cc/150?img=3',
+      'sound': 'Original sound - DiegoMix',
+      'description': 'Consejos de movilidad para principiantes 🤸‍♂️📌',
+      'isAsset': true,
     },
   ];
 
@@ -61,6 +88,7 @@ class _RoomsListState extends State<RoomsList> {
             userAvatarUrl: video['avatar']!,
             soundName: video['sound']!,
             description: video['description']!,
+            isAsset: video['isAsset']!,
           );
         },
       ),

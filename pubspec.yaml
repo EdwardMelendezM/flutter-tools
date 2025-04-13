@@ -66,10 +66,10 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-  # assets:
-  #   - lib/src/videos/video_1.mp4
-  #   - lib/src/videos/video_2.mp4
-  #   - lib/src/videos/video_3.mp4
+  assets:
+    - src/videos/video_1.mp4
+    - src/videos/video_2.mp4
+    - src/videos/video_3.mp4
 
   # To add assets to your application, add an assets section, like this:
   # assets:

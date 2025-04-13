@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:testapp/rooms/presentation/components/video_display.dart';
+import 'package:testapp/rooms/presentation/components/action_icon.dart';
 
 class RoomItem extends StatefulWidget {
   final String videoUrl;
@@ -7,6 +9,7 @@ class RoomItem extends StatefulWidget {
   final String userAvatarUrl;
   final String soundName;
   final String description;
+  final bool isAsset;
 
   const RoomItem({
     super.key,
@@ -15,6 +18,7 @@ class RoomItem extends StatefulWidget {
     required this.userAvatarUrl,
     required this.soundName,
     required this.description,
+    required this.isAsset,
   });
 
   @override
@@ -28,12 +32,15 @@ class _RoomItemState extends State<RoomItem> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
-      ..initialize().then((_) {
-        setState(() => _isInitialized = true);
-        _controller.setLooping(true);
-        _controller.play();
-      });
+    _controller = widget.isAsset
+        ? VideoPlayerController.asset(widget.videoUrl)
+        : VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
+
+    _controller.initialize().then((_) {
+      setState(() => _isInitialized = true);
+      _controller.setLooping(true);
+      _controller.play();
+    });
   }
 
   @override
@@ -50,7 +57,7 @@ class _RoomItemState extends State<RoomItem> {
         children: [
           // 🎥 Video con loader propio
           Positioned.fill(
-            child: _VideoDisplay(
+            child: VideoDisplay(
               controller: _controller,
               isInitialized: _isInitialized,
             ),
@@ -63,14 +70,14 @@ class _RoomItemState extends State<RoomItem> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _ActionIcon(icon: Icons.favorite, label: '123K', onTap: () {}),
+                ActionIcon(icon: Icons.favorite, label: '123K', onTap: () {}),
                 const SizedBox(height: 20),
-                _ActionIcon(
+                ActionIcon(
                     icon: Icons.chat_bubble_outline, label: '2K', onTap: () {}),
                 const SizedBox(height: 20),
-                _ActionIcon(icon: Icons.share, label: 'Share', onTap: () {}),
+                ActionIcon(icon: Icons.share, label: 'Share', onTap: () {}),
                 const SizedBox(height: 20),
-                _ActionIcon(
+                ActionIcon(
                     icon: Icons.bookmark_border, label: 'Save', onTap: () {}),
                 const SizedBox(height: 20),
                 GestureDetector(
@@ -121,88 +128,6 @@ class _RoomItemState extends State<RoomItem> {
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-/// 🎥 Video con loader en overlay
-class _VideoDisplay extends StatelessWidget {
-  final VideoPlayerController controller;
-  final bool isInitialized;
-
-  const _VideoDisplay({
-    super.key,
-    required this.controller,
-    required this.isInitialized,
-  });
-
-  bool _isVertical(Size size) {
-    final aspectRatio = size.height / size.width;
-    // Detectamos formato 9:16 (como 1920x1080 o similar)
-    return aspectRatio > 1.7;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        if (isInitialized)
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final size = controller.value.size;
-              final isVertical = _isVertical(size);
-
-              return Align(
-                alignment: Alignment.center,
-                child: FittedBox(
-                  fit: isVertical ? BoxFit.cover : BoxFit.contain,
-                  child: SizedBox(
-                    width: size.width,
-                    height: size.height,
-                    child: VideoPlayer(controller),
-                  ),
-                ),
-              );
-            },
-          )
-        else
-          Container(color: Colors.black),
-        if (!isInitialized)
-          const Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-/// 🧭 Widget reusable para íconos flotantes
-class _ActionIcon extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-
-  const _ActionIcon({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Icon(icon, color: Colors.white, size: 32),
-          const SizedBox(height: 4),
-          Text(label,
-              style: const TextStyle(color: Colors.white, fontSize: 12)),
         ],
       ),
     );
