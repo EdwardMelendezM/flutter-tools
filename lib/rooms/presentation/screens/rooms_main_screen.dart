@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:testapp/rooms/presentation/components/room_list.dart';
+import 'package:testapp/rooms/presentation/components/keep_alive_rooms_list.dart';
 
 class RoomsMainScreen extends StatefulWidget {
-  const RoomsMainScreen({Key? key}) : super(key: key);
+  const RoomsMainScreen({super.key});
 
   @override
   State<RoomsMainScreen> createState() => _RoomsMainScreenState();
@@ -13,8 +13,8 @@ class _RoomsMainScreenState extends State<RoomsMainScreen> {
   final PageController _pageController = PageController();
 
   final List<Widget> _screens = [
+    const KeepAliveRoomsList(),
     const Center(child: Text('Buscar')),
-    const RoomsList(),
     const Center(child: Text('Subir Video')),
     const Center(child: Text('Inbox')),
     const Center(child: Text('Perfil')),
@@ -66,8 +66,8 @@ class _RoomsMainScreenState extends State<RoomsMainScreen> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         items: [
-          _buildTab(Icons.search, 'Buscar'),
           _buildTab(Icons.home, 'Inicio'),
+          _buildTab(Icons.search, 'Buscar'),
           _buildTab(Icons.add_box, 'Subir'),
           _buildTab(Icons.message, 'Inbox'),
           _buildTab(Icons.person, 'Perfil'),
